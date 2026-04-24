@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DWPLUS - Triagem de Chamados Jira</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <h1>DWPLUS Triagem IA</h1>
+        <p>MVP academico com importacao do Jira e IA local baseada em conhecimento interno</p>
+      </div>
+      <span class="badge">Jira + IA local</span>
+    </header>
+
+    <main class="layout">
+      <section class="panel">
+        <h2>Jira</h2>
+        <p class="helper">
+          Importe ate 50 chamados criados nos ultimos 90 dias. As credenciais ficam
+          somente no arquivo <strong>.env</strong>.
+        </p>
+        <button id="btn-importar-jira" type="button">Importar chamados do Jira</button>
+        <div id="resultado-importacao" class="import-result hidden"></div>
+      </section>
+
+      <section class="panel">
+        <div class="section-title">
+          <h2>Chamados importados</h2>
+          <button id="btn-recarregar" class="secondary" type="button">Recarregar</button>
+        </div>
+        <div id="lista-chamados" class="ticket-list"></div>
+      </section>
+
+      <section class="panel detail-panel">
+        <div class="section-title">
+          <h2>Detalhe</h2>
+          <button id="btn-analisar" type="button" disabled>Analisar com IA</button>
+        </div>
+
+        <div id="detalhe-chamado" class="empty-state">
+          Selecione um chamado importado.
+        </div>
+
+        <div id="sugestao-box" class="suggestion hidden">
+          <h3>Sugestao da IA</h3>
+          <p class="helper">Gerada com base na base interna da DWPLUS, palavras-chave e chamados parecidos.</p>
+          <dl>
+            <div>
+              <dt>Organizacao</dt>
+              <dd id="sug-organizacao"></dd>
+            </div>
+            <div>
+              <dt>Titulo</dt>
+              <dd id="sug-titulo"></dd>
+            </div>
+            <div>
+              <dt>Categoria</dt>
+              <dd id="sug-categoria"></dd>
+            </div>
+            <div>
+              <dt>Prioridade</dt>
+              <dd id="sug-prioridade"></dd>
+            </div>
+            <div>
+              <dt>Confianca</dt>
+              <dd id="sug-confianca"></dd>
+            </div>
+          </dl>
+          <h4>Solucao sugerida</h4>
+          <p id="sug-solucao" class="justification"></p>
+          <h4>Fontes internas usadas</h4>
+          <ul id="sug-fontes" class="sources"></ul>
+          <p id="sug-justificativa" class="justification"></p>
+        </div>
+
+        <form id="form-validacao" class="form validation hidden">
+          <h3>Validacao humana</h3>
+          <label>
+            Organizacao final
+            <input name="organizacao_final" required />
+          </label>
+          <label>
+            Titulo final
+            <input name="titulo_final" required />
+          </label>
+          <label>
+            Categoria final
+            <select name="categoria_final" required>
+              <option>Incidente</option>
+              <option>Solicitacao</option>
+              <option>Performance</option>
+              <option>Acesso</option>
+              <option>Fiscal</option>
+              <option>Infraestrutura</option>
+              <option>Triagem</option>
+            </select>
+          </label>
+          <label>
+            Prioridade final
+            <select name="prioridade_final" required>
+              <option>Baixa</option>
+              <option>Media</option>
+              <option>Alta</option>
+              <option>Critica</option>
+            </select>
+          </label>
+          <label>
+            Observacao
+            <textarea name="observacao" rows="3"></textarea>
+          </label>
+          <button type="submit">Salvar validacao humana</button>
+        </form>
+
+        <div id="validacoes-box" class="history hidden">
+          <h3>Validacoes salvas</h3>
+          <div id="lista-validacoes"></div>
+        </div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast hidden"></div>
+    <script src="/static/app.js"></script>
+  </body>
+</html>

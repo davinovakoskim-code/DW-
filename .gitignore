@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+
+.venv/
+venv/
+
+backend/dwplus.db
+backend/*.db
+
+.env
+
